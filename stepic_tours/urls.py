@@ -28,4 +28,3 @@ urlpatterns = [
     path('tour/<int:id>/', tour_views.tour_view),
     path('admin/', admin.site.urls),
 ]
-
