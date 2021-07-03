@@ -1,14 +1,14 @@
 <h1>Для запуска нужно:</h1>
-<h3>
+<h5>
 <ul>
   <li>Python version: <b>"Python 3.9.6"</b></li>
   <hr>
-  <li>Install venv: <b>python -m venv venv</b></li>
+  <li>Установить venv: <b>python -m venv venv</b></li>
   <hr>
-  <li>Activate venv: <b>venv\\Scripts\\activate</b></li>
+  <li>Активировать venv: <b>venv\\Scripts\\activate</b></li>
   <hr>
-  <li>Import requirements.txt: <b>pip install -r requirements.txt</b></li>
+  <li>Импортрировать requirements.txt: <b>pip install -r requirements.txt</b></li>
   <hr>
-  <li>run server: <b>python manage.py runserver</b></li>
+  <li>Запустить server: <b>python manage.py runserver</b></li>
 </ul>
-</h3>
+</h5>
