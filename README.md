@@ -1,6 +1,8 @@
-Python version: "Python 3.9.6"
+Для запуска нужно:
 
-install venv: python -m venv venv
+* <h1>Python version:</h1> "Python 3.9.6"
+
+* install venv: python -m venv venv
 
 activate venv: venv\\Scripts\\activate
 
