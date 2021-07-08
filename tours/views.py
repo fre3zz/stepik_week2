@@ -19,8 +19,14 @@ def departure_view(request, departure: str):
     # также передаем город отправления
     # создаем и передаем словарь cost - с минимальной и максимальной ценами туров
     # создаем и передаем словарь nights - с минимальной и максимальной продолжительностью туров
-
     # передаем departures для рендера меню
+
+    try:
+        # Проверка на правильность указания адреса
+        departures[departure]
+    except KeyError:
+        raise Http404
+
 
     departure_tours = {tour_id: tour for (tour_id, tour) in tours.items() if tour["departure"] == departure}
 
@@ -32,11 +38,8 @@ def departure_view(request, departure: str):
         "maximum": max([tour.get("nights") for tour in departure_tours.values()]),
         "minimum": min([tour.get("nights") for tour in departure_tours.values()])
     }
-    if departure not in departures.keys():
-        print("123123")
-        raise Http404
-    else:
-        return render(request, 'tours/departure.html', {"dep_tours": departure_tours,  # туры из места отправления
+
+    return render(request, 'tours/departure.html', {"dep_tours": departure_tours,  # туры из места отправления
                                                         "departure": departures.get(departure),  # место вылета
                                                         "costs": costs,  # словарь с мин и макс стоимостями
                                                         "nights": nights,  # словарь с мин и макс количеством ночей
