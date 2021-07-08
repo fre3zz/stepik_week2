@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "tours/base.html" %}
 {% block content %}
     <h1 class="display-5 mt-4">Летим {{ departure }}</h1>
     <p class="mb-4">Найдено {{ dep_tours.len }} туров, от {{ costs.minimum }} до {{ costs.maximum }} и от {{ nights.minimum }} ночей до {{ night.maximum }} ночей</p>
@@ -10,7 +10,7 @@
           <img src="{{ tour.picture }}" style="object-fit:cover; height:220px; width: auto" class="card-img-top img-fluid" alt="">
           <div class="card-body">
             <h2 class="h5 card-title">{{ tour.title }}</h2>
-            <p class="card-text">{{ tour.description|truncatechars:100 }}</p>
+            <p class="card-text">{{ tour.description|truncatechars:90 }}</p>
             <a href="/tour/{{key}}/" class="btn btn-sm btn-primary">Подробнее</a>
           </div>
         </div>
