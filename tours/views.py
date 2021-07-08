@@ -1,6 +1,8 @@
+import random
+
 from django.http import HttpResponseNotFound, HttpResponseServerError, Http404
 from django.shortcuts import render
-import random
+
 from data import tours, departures
 # Create your views here.
 # Для рендеринга меню departures передается каждому view, честно говоря, не понял как сделать элегантнее.
@@ -27,7 +29,6 @@ def departure_view(request, departure: str):
     except KeyError:
         raise Http404
 
-
     departure_tours = {tour_id: tour for (tour_id, tour) in tours.items() if tour["departure"] == departure}
 
     costs = {
@@ -40,11 +41,11 @@ def departure_view(request, departure: str):
     }
 
     return render(request, 'tours/departure.html', {"dep_tours": departure_tours,  # туры из места отправления
-                                                        "departure": departures.get(departure),  # место вылета
-                                                        "costs": costs,  # словарь с мин и макс стоимостями
-                                                        "nights": nights,  # словарь с мин и макс количеством ночей
-                                                        "departures": departures  # места отправления для меню
-                                                        })
+                                                    "departure": departures.get(departure),  # место вылета
+                                                    "costs": costs,  # словарь с мин и макс стоимостями
+                                                    "nights": nights,  # словарь с мин и макс количеством ночей
+                                                    "departures": departures  # места отправления для меню
+                                                    })
 
 
 def tour_view(request, tour_id: int):
