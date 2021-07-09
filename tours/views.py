@@ -3,17 +3,20 @@ import random
 from django.http import HttpResponseNotFound, HttpResponseServerError, Http404
 from django.shortcuts import render
 
-from data import tours, departures
+from tours.tour_data import tours, departures, subtitle, description
+
+
 # Create your views here.
-# Для рендеринга меню departures передается каждому view, честно говоря, не понял как сделать элегантнее.
 
 
 def main_view(request):
     # создаем случайный список из 6 туров
     random_6_tours = dict(random.sample(tours.items(), 6))
-    return render(request, 'tours/index.html', {"random_6_tours": random_6_tours,  # 6 случайных туров
-                                                "departures": departures  # места отправления для формирования меню
-                                                })
+    return render(request, template_name='tours/index.html',
+                  context={"random_6_tours": random_6_tours,  # 6 случайных туров
+                           "subtitle": subtitle,
+                           "description": description
+                           })
 
 
 def departure_view(request, departure: str):
@@ -21,11 +24,9 @@ def departure_view(request, departure: str):
     # также передаем город отправления
     # создаем и передаем словарь cost - с минимальной и максимальной ценами туров
     # создаем и передаем словарь nights - с минимальной и максимальной продолжительностью туров
-    # передаем departures для рендера меню
 
     try:
-        # Проверка на правильность указания адреса
-        departures[departure]
+        dep = departures[departure]
     except KeyError:
         raise Http404
 
@@ -40,19 +41,19 @@ def departure_view(request, departure: str):
         "minimum": min([tour.get("nights") for tour in departure_tours.values()])
     }
 
-    return render(request, 'tours/departure.html', {"dep_tours": departure_tours,  # туры из места отправления
-                                                    "departure": departures.get(departure),  # место вылета
-                                                    "costs": costs,  # словарь с мин и макс стоимостями
-                                                    "nights": nights,  # словарь с мин и макс количеством ночей
-                                                    "departures": departures  # места отправления для меню
-                                                    })
+    return render(request,
+                  template_name='tours/departure.html',
+                  context={"dep_tours": departure_tours,  # туры из места отправления
+                           "departure": dep,  # место вылета
+                           "costs": costs,  # словарь с мин и макс стоимостями
+                           "nights": nights,  # словарь с мин и макс количеством ночей
+                           })
 
 
 def tour_view(request, tour_id: int):
     # Для отображения нужно количества звёзд создадим дополнительный range, позволящий отобразить
     # в template нужное количество звезд для тура, выбранного по id
     # Также передается город из которого вылет
-    # Departures передается для рендера меню
 
     try:
         tour = tours[tour_id]
@@ -61,11 +62,12 @@ def tour_view(request, tour_id: int):
     except KeyError:
         raise Http404
 
-    return render(request, 'tours/tour.html', {"tour": tour,  # тур по tour_id
-                                               "star_range": star_range,  # range для количества звезд
-                                               "departure": departure,  # место вылета
-                                               "departures": departures  # места отправления для формирования меню
-                                               })
+    return render(request,
+                  template_name='tours/tour.html',
+                  context={"tour": tour,  # тур по tour_id
+                           "star_range": star_range,  # range для количества звезд
+                           "departure": departure,  # место вылета
+                           })
 
 
 def custom_handler404(request, exception):
