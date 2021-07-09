@@ -1,5 +1,6 @@
 from tours.tour_data import departures, title
 
+
 def code_base(request):
 
     return {
