@@ -1,7 +1,8 @@
 {% extends "tours/base.html" %}
+{% load ru_pluralize %}
 {% block content %}
     <h1 class="display-5 mt-4">Летим {{ departure }}</h1>
-    <p class="mb-4">Найдено {{ dep_tours|length }} туров, от {{ costs.minimum }} до {{ costs.maximum }} рублей и от {{ nights.minimum }} до {{ nights.maximum }} ночей</p>
+    <p class="mb-4">Найдено {{ dep_tours|length|ru_pluralize:"тур,тура,туров" }}, от {{ costs.minimum }} до {{ costs.maximum }} рублей и от {{ nights.minimum }} до {{ nights.maximum }} ночей</p>
     <!-- CARDS -->
     <div class="row mt-5">
     {% for key,tour in dep_tours.items %}
