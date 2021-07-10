@@ -16,11 +16,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
+
           {% for k, v in departures.items %}
           <li class="nav-item {% if request.path == "/departure/"|add:k|add:"/" %}active{% endif %}">
             <a class="nav-link" href="/departure/{{ k }}">{{ v }}</a>
           </li>
           {% endfor %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ request.META.HTTP_REFERER }}"> Назад </a>
           </li>
         </ul>
       </div>

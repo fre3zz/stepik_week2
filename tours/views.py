@@ -1,6 +1,6 @@
 import random
 
-from django.http import HttpResponseNotFound, HttpResponseServerError, Http404
+from django.http import HttpResponseNotFound, HttpResponseServerError, Http404, HttpRequest
 from django.shortcuts import render
 
 from tours.tour_data import tours, departures, subtitle, description
@@ -9,7 +9,7 @@ from tours.tour_data import tours, departures, subtitle, description
 # Create your views here.
 
 
-def main_view(request):
+def main_view(request: HttpRequest):
     # создаем случайный список из 6 туров
     random_6_tours = dict(random.sample(tours.items(), 6))
     return render(request, template_name='tours/index.html',
