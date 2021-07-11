@@ -12,11 +12,12 @@ from tours.tour_data import tours, departures, subtitle, description
 def main_view(request: HttpRequest):
     # создаем случайный список из 6 туров
     random_6_tours = dict(random.sample(tours.items(), 6))
-    return render(request, template_name='tours/index.html',
-                  context={"random_6_tours": random_6_tours,  # 6 случайных туров
-                           "subtitle": subtitle,
-                           "description": description
-                           })
+    context = {
+        "random_6_tours": random_6_tours,  # 6 случайных туров
+        "subtitle": subtitle,  # Текст для картинки #1
+        "description": description  # Текст для картинки #1
+    }
+    return render(request, template_name='tours/index.html', context=context)
 
 
 def departure_view(request, departure: str):
@@ -40,14 +41,13 @@ def departure_view(request, departure: str):
         "maximum": max([tour.get("nights") for tour in departure_tours.values()]),
         "minimum": min([tour.get("nights") for tour in departure_tours.values()])
     }
-
-    return render(request,
-                  template_name='tours/departure.html',
-                  context={"dep_tours": departure_tours,  # туры из места отправления
-                           "departure": dep,  # место вылета
-                           "costs": costs,  # словарь с мин и макс стоимостями
-                           "nights": nights,  # словарь с мин и макс количеством ночей
-                           })
+    context = {
+        "dep_tours": departure_tours,  # туры из места отправления
+        "departure": dep,  # место вылета
+        "costs": costs,  # словарь с мин и макс стоимостями
+        "nights": nights,  # словарь с мин и макс количеством ночей
+    }
+    return render(request, template_name='tours/departure.html', context=context)
 
 
 def tour_view(request, tour_id: int):
@@ -61,13 +61,12 @@ def tour_view(request, tour_id: int):
         departure = departures.get(tour["departure"])
     except KeyError:
         raise Http404
-
-    return render(request,
-                  template_name='tours/tour.html',
-                  context={"tour": tour,  # тур по tour_id
-                           "star_range": star_range,  # range для количества звезд
-                           "departure": departure,  # место вылета
-                           })
+    context = {
+        "tour": tour,  # тур по tour_id
+        "star_range": star_range,  # range для количества звезд
+        "departure": departure,  # место вылета
+    }
+    return render(request, template_name='tours/tour.html', context=context)
 
 
 def custom_handler404(request, exception):
