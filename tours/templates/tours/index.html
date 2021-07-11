@@ -8,14 +8,14 @@
     </section>
     <!-- CARDS -->
     <div class="row mt-5">
-      {% for key,tour in random_6_tours.items %}
+      {% for tour_id,tour in random_6_tours.items %}
       <div class="col-sm-12 col-lg-4">
         <div class="card mb-4">
           <img src="{{ tour.picture }}" style="object-fit:cover; height:220px; width: auto" class="card-img-top img-fluid" alt="">
           <div class="card-body">
             <h2 class="h5 card-title">{{ tour.title }} {{ tour.stars }}★</h2>
             <p class="card-text">{{ tour.description|truncatechars:90 }}</p>
-            <a href="/tour/{{key}}/" class="btn btn-sm btn-primary">Подробнее</a>
+            <a href="{% url 'tour' tour_id %}" class="btn btn-sm btn-primary">Подробнее</a>
           </div>
         </div>
       </div>
